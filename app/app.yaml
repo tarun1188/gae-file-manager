@@ -1,0 +1,35 @@
+application: gae-file-manager
+version: 0-0-1
+runtime: python27
+api_version: 1
+threadsafe: true
+module: default
+default_expiration: "4d 5h"
+
+builtins:
+- remote_api: on
+
+inbound_services:
+- warmup
+- channel_presence
+
+handlers:
+
+- url: /lib
+  static_dir: static/lib
+- url: /js
+  static_dir: static/js
+- url: /css
+  static_dir: static/css
+- url: /icons
+  static_dir: static/icons
+- url: /html
+  static_dir: static/html
+
+- url: /.*
+  script: main.application
+  secure: always
+
+libraries:
+- name: webapp2
+  version: latest
