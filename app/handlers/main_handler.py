@@ -23,7 +23,7 @@ class MainHandler(BaseHandler):
             files.append(dict(filename=blob.filename,
                               size=str((blob.size/1024)/1024) + " MB"
                               if (blob.size/1024)/1024 > 1 else str(blob.size/1024) + " KB",
-                              date_added=blob.creation, url="/serve/"+str(file_.key.id())+"?dl=1",
+                              date_added=blob.creation, url="/serve/"+str(file_.key.id()),
                               description="" if not file_.description else urllib.unquote_plus(file_.description)))
         directories = Directory.query(Directory.path == file_path).fetch()
         directory_list = []

@@ -49,7 +49,6 @@ class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
 
 
 class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
-    # Upload normal files
     def post(self):
         self.response.headers['Content-Type'] = 'application/json'
         upload_files = self.get_uploads('file')  # 'file' is file upload field in the form
@@ -58,7 +57,7 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
         if not file_path:
             blobstore.delete(blob_info.key())
             self.response.status = 400
-            response_dict = dict(msg="Missing parameter path")
+            response_dict = dict(msg='Missing parameter "path"')
         else:
             paths = file_path.split("/")
             for index, name in enumerate(paths):

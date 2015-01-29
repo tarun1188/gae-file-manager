@@ -1,0 +1,9 @@
+.custom-menu {
+    z-index:1000;
+    position: absolute;
+    background-color:#f7f7f7;
+    border: 1px solid #b6b4b4;
+    border-radius: 3px;
+    padding: 2px;
+    cursor: pointer;
+}
