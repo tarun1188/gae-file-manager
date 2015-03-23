@@ -74,8 +74,9 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
             file_.path = file_path
             file_.description = self.request.get("description")
             file_.put()
-            response_dict = dict(blob_key=str(blob_info.key()), file_name=blob_info.filename, size=blob_info.size,
-                                 file_type=blob_info.content_type)
+            response_dict = dict(file_name=blob_info.filename, size=blob_info.size,
+                                 file_type=blob_info.content_type,
+                                 file_url="https://gae-file-manager.appspot.com/serve/"+str(file_.key.id()))
             if "image" in blob_info.content_type:
                 response_dict["image_url"] = images.get_serving_url(blob_info.key())
         rv = json.dumps(response_dict, cls=ComplexEncoder)
