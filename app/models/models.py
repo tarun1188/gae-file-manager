@@ -17,6 +17,7 @@ class Directory(ndb.Model):
 
 
 class User(ndb.Model):
-    email_id = ndb.StringProperty(required=True)
+    user_id = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)
-    hash_key = ndb.StringProperty(required=True)
+    is_deleted = ndb.BooleanProperty(default=False, required=True)
+    # hash_key = ndb.StringProperty(required=True)

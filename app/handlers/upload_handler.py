@@ -1,13 +1,17 @@
+import base64
+from services.helper import Helper
+
 __author__ = 'Tarun'
 
 import urllib
 import json
+import hashlib
 from google.appengine.api import images
 from handlers import BaseHandler
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import blobstore
 import logging
-from models.models import Directory, File
+from models.models import Directory, File, User
 from services.response_renderer import ComplexEncoder
 
 log = logging.getLogger(__name__)
@@ -16,14 +20,33 @@ log.setLevel(logging.DEBUG)
 
 class FileHandler(BaseHandler):
     def get_upload_url(self):
-        count = self.request.get("count")
-        count = 1 if not count else int(count)
-        blob_urls = []
-        for x in range(count):
-            upload_url = blobstore.create_upload_url('/upload')
-            blob_urls.append(upload_url)
-        log.debug(blob_urls)
-        self.render_json(dict(blob_urls=blob_urls))
+        if not self.request.authorization:
+            self.response.status = 401
+            self.response.headers['WWW-Authenticate'] = 'Basic realm="GAE File Manager"'
+            self.render_json(dict(msg="Unauthorized request"))
+            return
+        else:
+            user_header = base64.decodestring(self.request.authorization[1])
+            user_id = user_header[0:user_header.find(":")]
+            password = user_header[user_header.find(":")+1:]
+            log.info(user_id)
+            log.info(password)
+            md5_generator = hashlib.md5()
+            md5_generator.update(password)
+            if not Helper.fetch_entity(User, user_id=user_id, password=md5_generator.hexdigest()):
+                self.response.status = 401
+                self.response.headers['WWW-Authenticate'] = 'Basic realm="GAE File Manager"'
+                self.render_json(dict(msg="Unauthorized request"))
+                return
+
+            count = self.request.get("count")
+            count = 1 if not count else int(count)
+            blob_urls = []
+            for x in range(count):
+                upload_url = blobstore.create_upload_url('/upload')
+                blob_urls.append(upload_url)
+            log.debug(blob_urls)
+            self.render_json(dict(blob_urls=blob_urls))
 
 
 class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
