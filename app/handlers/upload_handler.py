@@ -48,15 +48,29 @@ class FileHandler(BaseHandler):
             log.debug(blob_urls)
             self.render_json(dict(blob_urls=blob_urls))
 
-
-class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
-    def get(self, resource):
-        save_file = True if self.request.get("dl") == "1" else None
+    def delete(self, _id):
         try:
-            resource = int(resource)
+            _id = int(_id)
         except Exception:
             pass
-        file_ = File.get_by_id(resource)
+
+        file_ = File.get_by_id(_id)
+        if file_ and file_.blob:
+            blobstore.delete(file_.blob)
+            file_.key.delete()
+            self.render_json(dict(msg="Successfully deleted file"))
+        else:
+            self.render_json(dict(msg="File not found"))
+
+
+class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
+    def get(self, _id):
+        save_file = True if self.request.get("dl") == "1" else None
+        try:
+            _id = int(_id)
+        except Exception:
+            pass
+        file_ = File.get_by_id(_id)
         if file_:
             blob_info = blobstore.BlobInfo.get(file_.blob)
             self.send_blob(blob_info, save_as=save_file) if save_file else \
