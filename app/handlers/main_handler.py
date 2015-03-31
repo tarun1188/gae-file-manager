@@ -15,6 +15,8 @@ class MainHandler(BaseHandler):
         super(MainHandler, self).__init__(request, response)
 
     def get_base_url(self, params=None):
+        if params[-1:] == "/":
+            params = params[:-1]
         file_path = "/" if not params else "/"+str(params)
         files_list = File.query(File.path == file_path).fetch()
         files = []

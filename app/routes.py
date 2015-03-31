@@ -3,7 +3,6 @@ __author__ = 'Tarun'
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import webapp2
-
 #This is the place where all of your URL mapping goes
 route_list = [
     webapp2.Route(r'/upload-url', handler='handlers.FileHandler:get_upload_url',

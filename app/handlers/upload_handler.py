@@ -51,12 +51,7 @@ class FileHandler(BaseHandler):
 
 class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, resource):
-        # index = self.request.get("index")
-        # offset = self.request.get("offset")
         save_file = True if self.request.get("dl") == "1" else None
-        # index = 0 if not index else int(index)
-        # offset = 500 if not offset else int(offset)
-        # resource = str(urllib.unquote(resource))
         try:
             resource = int(resource)
         except Exception:
