@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/js/semantic.js"></script>
+    <link rel="stylesheet" type="text/css" href="/lib/css/semantic.css">
+    <title>Registration</title>
+</head>
+
+<body>
+    <div style="padding-left: 30%; padding-right: 30%; padding-top: 100px">
+    <form class="ui form">
+        <div class="field">
+            <input type="text" name="name" placeholder="Name">
+            <input type="text" name="email" placeholder="Email Address">
+        </div>
+        <div class="field">
+            <input type="password" name="password" placeholder="Password">
+        </div>
+        <div class="ui fluid large blue submit button">Register</div>
+
+         <div class="ui error message"></div>
+    </form>
+
+    <div class="ui message">
+      Need an account? <a href="#">Request</a>
+    </div>
+</div>
+
+<address id="hostname" style=" padding-left: 10px; float: left; position: fixed; bottom: 0;"></address>
+</body>
+<script src="js/controllers/registration.js"></script>
+<script src="js/views/view-controller.js"></script>
+</html>

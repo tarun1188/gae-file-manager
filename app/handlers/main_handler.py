@@ -43,7 +43,13 @@ class MainHandler(BaseHandler):
         self.render_html("html/login.html")
 
     def authenticate_user(self):
-        email_id=  self.request.get("email_id")
+        email_id = self.request.get("email_id")
         password = self.request.get("password")
         remember_me = self.request.get("remember_me")
         self.redirect("/")
+
+    def register_user(self):
+        self.render_html("html/register.html")
+
+    def admin_panel(self):
+        self.render_html("html/admin_panel.html")

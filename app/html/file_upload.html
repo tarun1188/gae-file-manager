@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <meta charset="utf-8">
     <title>GAE File Manager</title>
 </head>
 <body>
     <div>
-        <h2 id="path_name"></h2>
+        <h2 id="path_name" style=" padding-left: 10px;"></h2>
         <!--<a style="float:right; padding-right:20px; margin-top: -40px;" href="/login-user">Login</a>-->
     </div>
     <div style="display:none" class='custom-menu'>Create Folder</div>
@@ -28,10 +27,10 @@
           </tbody>
         </table>
     {% else %}
-        <p>That's All Folks. Nothing to see here.</p>
+        <p style=" padding-left: 10px;">That's All Folks. Nothing to see here.</p>
     {% endif %}
     </div>
-    <address id="hostname"></address>
+    <address id="hostname" style=" padding-left: 10px; float: left; position: fixed; bottom: 0;"></address>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/view-helper.css">
